@@ -1,4 +1,4 @@
-package org.example.extension;
+package org.example.util;
 
 import org.example.annotation.TodoParam;
 import org.example.model.Todo;
@@ -20,7 +20,7 @@ public class TodoParamResolver implements ParameterResolver {
     }
 
     @Override
-    public Object resolveParameter(ParameterContext parameterContext,
+    public Todo resolveParameter(ParameterContext parameterContext,
                                    ExtensionContext extensionContext)
             throws ParameterResolutionException {
 
