@@ -1,6 +1,4 @@
-package org.example.util;
-
-import org.example.model.Todo;
+package org.example;
 
 import java.security.SecureRandom;
 import java.util.Random;

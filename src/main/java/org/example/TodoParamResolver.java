@@ -1,13 +1,11 @@
-package org.example.util;
+package org.example;
 
-import org.example.annotation.TodoParam;
-import org.example.model.Todo;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 
-import static org.example.util.RandomTodoGenerator.generateRandomTodo;
+import static org.example.RandomTodoGenerator.generateRandomTodo;
 
 public class TodoParamResolver implements ParameterResolver {
     @Override

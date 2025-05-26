@@ -1,4 +1,3 @@
-## TODO test app testing via Rest Assured
+## TODO test app testing via Retrofit
 
-JUnit5 with Extension API examples
-Allure reports
+
