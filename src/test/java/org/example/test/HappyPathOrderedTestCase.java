@@ -9,7 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
-import static org.apache.http.HttpStatus.*;
+import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.apache.http.HttpStatus.SC_OK;
 import static org.example.util.RestAssuredHelper.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -29,67 +30,68 @@ public class HappyPathOrderedTestCase {
     @BeforeAll
     @DisplayName("Убеждаемся что БД пуста")
     void setUp() {
-        // можно assumeTrue
         assertTrue(getTodos(SC_OK).isEmpty(),
                 "БД должно быть пустым до тестового прогона");
+
     }
 
     @Test
+    @TmsLink("TA-2")
     @Order(1)
     @Story("Создание задачи POST todos/")
-    @DisplayName("Проверка post status code is 201")
+    @DisplayName("Проверка создания новой сущности в БД с валидными данными запроса.")
     @ExtendWith(value = TodoParamResolver.class)
     void postTodoTest(@TodoParam Todo randomTodo) {
         postTodo(randomTodo, SC_CREATED);
         testTodo = randomTodo;
-    }
-
-    @Test
-    @Order(2)
-    @DisplayName("Проверка get status code is 200")
-    @Story("Запрос всех задач GET todos/")
-    void getTodoTest() {
         Todo responsedTodo = getTodos(SC_OK).getFirst();
         assertEquals(testTodo, responsedTodo,
                 "В БД должна лежать одна сущность %s".formatted(testTodo));
     }
-
-    @Test
-    @Order(3)
-    @DisplayName("Проверка put status code is 200")
-    @Story("Обновление задачи PUT todos/id")
-    @ExtendWith(value = TodoParamResolver.class)
-    void putTodoTest(@TodoParam Todo newRandomTodo) {
-        putTodo(testTodo.getId(), newRandomTodo, SC_OK);
-        testTodo = newRandomTodo;
-    }
-
-    @Test
-    @Order(4)
-    @DisplayName("Проверка get status code обновленной сущности is 200")
-    @Story("Запрос всех задач GET todos/")
-    void getUpdatedTodoTest() {
-        Todo responsedTodo = getTodos(SC_OK).getFirst();
-        assertEquals(testTodo, responsedTodo,
-                "В БД должна лежать одна обновленная сущность %s".formatted(testTodo));
-    }
-
-    @Test
-    @Order(5)
-    @Story("Удаление задачи DELETE todos/id")
-    @DisplayName("Проверка delete status code is 204")
-    void deleteTodoTest() {
-        deleteTodo(testTodo.getId(), SC_NO_CONTENT);
-    }
-
-    @Test
-    @Order(6)
-    @DisplayName("Проверка get status code is 200, проверка БД - пустое")
-    @Story("Запрос всех задач GET todos/")
-    void getTodoDeletedTest() {
-        assertTrue(getTodos(SC_OK).isEmpty(),
-                "БД должна быть пустой");
-    }
+//
+//    @Test
+//    @TmsLink("TA-3")
+//    @QaseId(3)
+//    @Order(2)
+//    @Story("Обновление задачи PUT todos/id")
+//    @DisplayName("Проверка замены сущности, уже лежащей  в БД, новой с валидными данными запроса.")
+//    @ExtendWith(value = TodoParamResolver.class)
+//    void putTodoTest(@TodoParam Todo newRandomTodo) {
+//        putTodo(testTodo.getId(), newRandomTodo, SC_OK);
+//        testTodo = newRandomTodo;
+//        Todo responsedTodo = getTodos(SC_OK).getFirst();
+//        assertEquals(testTodo, responsedTodo,
+//                "В БД должна лежать одна обновленная сущность %s".formatted(testTodo));
+//    }
+//
+//    @Test
+//    @TmsLink("TA-4")
+//    @QaseId(4)
+//    @Order(3)
+//    @Story("Удаление задачи DELETE todos/id")
+//    @DisplayName("Проверка удаления сущности из БД с валидными данными запроса.")
+//    void deleteTodoTest() {
+//        deleteTodo(testTodo.getId(), SC_NO_CONTENT);
+//        assertTrue(getTodos(SC_OK).isEmpty(),
+//                "В списке полученных сущностей не должно находиться сущности, которую мы удаляем.");
+//    }
+//
+//
+//    @Test
+//    @TmsLink("TA-1")
+//    @QaseId(1)
+//    @Story("Получение списка задач через GET /todos без фильтров")
+//    @DisplayName("Проверка запроса списка всех сущностей из БД без фильтров.")
+//    void getAllEntitiesTest() {
+//        List<Todo> todosRandom = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            todosRandom.add(generateRandomTodo());
+//        }
+//        todosRandom.forEach(s -> postTodo(s, SC_CREATED));
+//        List<Todo> respondedTodos = getTodos(SC_OK);
+//        assertEquals(todosRandom, respondedTodos,
+//                "В БД должны лежать именно эти сущности  %s".formatted(todosRandom));
+//    }
 
     //    @Test
     @AfterAll

@@ -31,52 +31,55 @@ public class RestAssuredHelper {
     }
 
     @Step("GET/todos без фильтров")
-    public static List<Todo> getTodos(int ExpectedCode) {
+    public static List<Todo> getTodos(int expectedCode) {
         return getBase(getRequestSpec("").build()
-                , ExpectedCode);
+                , expectedCode);
     }
 
     @Step("GET/todos с фильтром 'offset={offset}' ")
-    public static List<Todo> getTodosOffset(Integer offset, int ExpectedCode) {
+    public static List<Todo> getTodosOffset(int offset,
+                                            int expectedCode) {
         return getBase(getRequestSpec("")
                         .addQueryParam(OFFSET_PARAM, offset)
                         .build()
-                , ExpectedCode);
+                , expectedCode);
     }
 
     @Step("GET/todos с фильтром 'limit'={limit}' ")
-    public static List<Todo> getTodosLimit(Integer limit, int ExpectedCode) {
+    public static List<Todo> getTodosLimit(int limit,
+                                           int expectedCode) {
         return getBase(getRequestSpec("")
                         .addQueryParam(LIMIT_PARAM, limit)
                         .build(),
-                ExpectedCode);
+                expectedCode);
     }
 
     @Step("GET/todos с фильтрами 'offset={offset}' / 'limit'={limit}' ")
-    public static List<Todo> getTodosOffsetAndLimit(Integer offset,
-                                                    Integer limit,
-                                                    int ExpectedCode) {
+    public static List<Todo> getTodosOffsetAndLimit(int offset,
+                                                    int limit,
+                                                    int expectedCode) {
         return getBase(getRequestSpec("")
                         .addQueryParams(Map.of(OFFSET_PARAM, offset, LIMIT_PARAM, limit))
                         .build(),
-                ExpectedCode);
+                expectedCode);
     }
 
     public static List<Todo> getBase(RequestSpecification requestSpecification,
-                                     int ExpectedCode) {
+                                     int expectedCode) {
         return given()
                 .filter(new AllureRestAssured())
                 .spec(requestSpecification)
                 .when()
                 .get()
                 .then()
-                .statusCode(ExpectedCode)
+                .statusCode(expectedCode)
                 .extract().body().as(new TypeRef<>() {
                 });
     }
 
     @Step("POST/todos : {todo}")
-    public static void postTodo(Todo todo, int ExpectedCode) {
+    public static void postTodo(Todo todo,
+                                int expectedCode) {
         given()
                 .filter(new AllureRestAssured())
                 .spec(getRequestSpec("").build())
@@ -85,12 +88,12 @@ public class RestAssuredHelper {
                 .when()
                 .post()
                 .then()
-                .statusCode(ExpectedCode);
+                .statusCode(expectedCode);
     }
 
     @Step("DELETE/todos : {id}")
-    public static void deleteTodo(Long id,
-                                  int ExpectedCode) {
+    public static void deleteTodo(long id,
+                                  int expectedCode) {
         given()
                 .filter(new AllureRestAssured())
                 .spec(getRequestSpec(String.valueOf(id)).build())
@@ -98,12 +101,13 @@ public class RestAssuredHelper {
                 .when()
                 .delete()
                 .then()
-                .statusCode(ExpectedCode);
+                .statusCode(expectedCode);
     }
 
     @Step("PUT/todos with id: {id}, replacement: {todo}")
-    public static void putTodo(Long id, Todo todo,
-                               int ExpectedCode) {
+    public static void putTodo(long id,
+                               Todo todo,
+                               int expectedCode) {
         given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -112,7 +116,7 @@ public class RestAssuredHelper {
                 .when()
                 .put()
                 .then()
-                .statusCode(ExpectedCode);
+                .statusCode(expectedCode);
     }
 
     public static void deleteAll() {
