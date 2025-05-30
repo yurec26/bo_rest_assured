@@ -22,6 +22,7 @@
         <maven.surefire.ver>3.5.3</maven.surefire.ver>
         <allure.maven.ver>2.14.0</allure.maven.ver>
         <junit.suites.ver>1.12.1</junit.suites.ver>
+        <aspectj.version>1.9.22.1</aspectj.version>
     </properties>
 
 
@@ -77,15 +78,10 @@
             <version>${rest.assured.ver}</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-api</artifactId>
-            <version>${junit.suites.ver}</version>
+            <groupId>io.qase</groupId>
+            <artifactId>qase-junit5-reporter</artifactId>
+            <version>4.0.0</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite</artifactId>
-            <version>${junit.suites.ver}</version>
         </dependency>
     </dependencies>
 
@@ -95,6 +91,23 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.ver}</version>
+                <configuration>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <properties>
+                        <configurationParameters>
+                            junit.jupiter.extensions.autodetection.enabled = true
+                        </configurationParameters>
+                    </properties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>1.9.22.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>io.qameta.allure</groupId>

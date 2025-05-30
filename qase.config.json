@@ -1,0 +1,33 @@
+{
+  "mode": "testops",
+  "fallback": "report",
+  "debug": false,
+  "captureLogs": false,
+  "report": {
+    "driver": "local",
+    "connection": {
+      "local": {
+        "path": "./build/qase-report",
+        "format": "json"
+      }
+    }
+  },
+  "testops": {
+    "api": {
+      "token": "${token}",
+      "host": "qase.io"
+    },
+    "plan": {
+      "id" : 2,
+      "complete" : false
+    },
+    "run": {
+      "title" : "Functional GET with filters"
+    },
+    "defect": false,
+    "project": "TA",
+    "batch": {
+      "size": 100
+    }
+  }
+}
