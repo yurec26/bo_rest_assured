@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                bat 'mvn test -Dgroups=smoke'
+                sh 'mvn test -Dgroups=smoke'
             }
         }
     }
