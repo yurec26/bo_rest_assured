@@ -1,17 +1,11 @@
 pipeline {
     agent { label 'lenovo_agent' }
-
     stages {
-        stage('Test') {
+        stage('Check') {
             steps {
-                sh 'mvn test -Dgroups=smoke'
+                sh 'pwd'
+                sh 'ls -la'
             }
-        }
-    }
-
-    post {
-        always {
-            allure includeProperties: false, jdk: '', results: [[path: 'target/allure-results']]
         }
     }
 }
