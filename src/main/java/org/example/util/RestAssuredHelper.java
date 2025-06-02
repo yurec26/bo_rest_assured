@@ -17,7 +17,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 
 public class RestAssuredHelper {
 
-    private final static String URL = "http://localhost:8080";
+    private final static String URL = "http://172.17.0.1:8080";
     private final static String TODO_PATH = "/todos/";
     private final static String LOGIN = "admin";
     private final static String PASS = "admin";
