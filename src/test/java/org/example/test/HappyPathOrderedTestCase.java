@@ -48,7 +48,7 @@ public class HappyPathOrderedTestCase {
     void postTodoTest(@TodoParam Todo randomTodo) {
         postTodo(randomTodo, SC_CREATED);
         testTodo = randomTodo;
-        Todo responsedTodo = getTodos(SC_OK).getFirst();
+        Todo responsedTodo = getTodos(SC_OK).get(0);
         assertEquals(testTodo, responsedTodo,
                 "В БД должна лежать одна сущность %s".formatted(testTodo));
     }
@@ -63,7 +63,7 @@ public class HappyPathOrderedTestCase {
     void putTodoTest(@TodoParam Todo newRandomTodo) {
         putTodo(testTodo.getId(), newRandomTodo, SC_OK);
         testTodo = newRandomTodo;
-        Todo responsedTodo = getTodos(SC_OK).getFirst();
+        Todo responsedTodo = getTodos(SC_OK).get(0);
         assertEquals(testTodo, responsedTodo,
                 "В БД должна лежать одна обновленная сущность %s".formatted(testTodo));
     }
