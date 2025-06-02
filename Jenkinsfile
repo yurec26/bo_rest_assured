@@ -1,10 +1,9 @@
 pipeline {
     agent { label 'lenovo_agent' }
     stages {
-        stage('Check') {
+        stage('Test') {
             steps {
-                sh 'pwd'
-                sh 'ls -la'
+                sh 'mvn test -Dgroups=smoke'
             }
         }
     }
