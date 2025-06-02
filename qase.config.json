@@ -14,15 +14,11 @@
   },
   "testops": {
     "api": {
-      "token": "${token}",
+      "token": "8d39b8082f4c4b4cab08a335323df57bf3e1e83bd9e3ba4d647baa8988b5924e",
       "host": "qase.io"
     },
-    "plan": {
-      "id" : 2,
-      "complete" : false
-    },
     "run": {
-      "title" : "Functional GET with filters"
+      "title" : "Happy Path 02.06.2025"
     },
     "defect": false,
     "project": "TA",
