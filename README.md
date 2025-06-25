@@ -1,5 +1,1 @@
-## TODO test app testing via Rest Assured
-
-JUnit5 with Extension API examples
-
-Allure reports
+## API автотесты для приложения TODO с использованием библиотеки BDD "Cucumber"

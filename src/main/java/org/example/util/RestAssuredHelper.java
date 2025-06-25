@@ -1,7 +1,5 @@
 package org.example.util;
 
-import io.qameta.allure.Step;
-import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
@@ -17,7 +15,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 
 public class RestAssuredHelper {
 
-    private final static String URL = "http://172.17.0.1:8080";
+    private final static String URL = "http://5.129.198.140:8080";
     private final static String TODO_PATH = "/todos/";
     private final static String LOGIN = "admin";
     private final static String PASS = "admin";
@@ -30,13 +28,11 @@ public class RestAssuredHelper {
                 .setBasePath(TODO_PATH + id);
     }
 
-    @Step("GET/todos без фильтров")
     public static List<Todo> getTodos(int expectedCode) {
         return getBase(getRequestSpec("").build()
                 , expectedCode);
     }
 
-    @Step("GET/todos с фильтром 'offset={offset}' ")
     public static List<Todo> getTodosOffset(int offset,
                                             int expectedCode) {
         return getBase(getRequestSpec("")
@@ -45,7 +41,6 @@ public class RestAssuredHelper {
                 , expectedCode);
     }
 
-    @Step("GET/todos с фильтром 'limit'={limit}' ")
     public static List<Todo> getTodosLimit(int limit,
                                            int expectedCode) {
         return getBase(getRequestSpec("")
@@ -54,7 +49,6 @@ public class RestAssuredHelper {
                 expectedCode);
     }
 
-    @Step("GET/todos с фильтрами 'offset={offset}' / 'limit'={limit}' ")
     public static List<Todo> getTodosOffsetAndLimit(int offset,
                                                     int limit,
                                                     int expectedCode) {
@@ -67,7 +61,6 @@ public class RestAssuredHelper {
     public static List<Todo> getBase(RequestSpecification requestSpecification,
                                      int expectedCode) {
         return given()
-                .filter(new AllureRestAssured())
                 .spec(requestSpecification)
                 .when()
                 .get()
@@ -77,11 +70,9 @@ public class RestAssuredHelper {
                 });
     }
 
-    @Step("POST/todos : {todo}")
     public static void postTodo(Todo todo,
                                 int expectedCode) {
         given()
-                .filter(new AllureRestAssured())
                 .spec(getRequestSpec("").build())
                 .contentType(ContentType.JSON)
                 .body(todo)
@@ -91,11 +82,9 @@ public class RestAssuredHelper {
                 .statusCode(expectedCode);
     }
 
-    @Step("DELETE/todos : {id}")
     public static void deleteTodo(long id,
                                   int expectedCode) {
         given()
-                .filter(new AllureRestAssured())
                 .spec(getRequestSpec(String.valueOf(id)).build())
                 .auth().preemptive().basic(LOGIN, PASS)
                 .when()
@@ -104,12 +93,10 @@ public class RestAssuredHelper {
                 .statusCode(expectedCode);
     }
 
-    @Step("PUT/todos with id: {id}, replacement: {todo}")
     public static void putTodo(long id,
                                Todo todo,
                                int expectedCode) {
         given()
-                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .spec(getRequestSpec(String.valueOf(id)).build())
                 .body(todo)
