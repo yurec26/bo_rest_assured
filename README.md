@@ -1,1 +1,1 @@
-## Todo app API testing 
+## API автотесты для приложения TODO с использованием библиотеки BDD "Cucumber"
