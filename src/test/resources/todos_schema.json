@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Todos",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "text": {
+        "type": "string"
+      },
+      "completed": {
+        "type": "boolean"
+      }
+    },
+    "required": ["id", "text", "completed"],
+    "additionalProperties": false
+  }
+}
